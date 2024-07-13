@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/base.css">
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/index.css">
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/snippets/gallery.css">
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/snippets/blocker.css">
+</head>
+<body>
+    <h1>Search Results</h1>
+    <div id="search-results" class="grid"></div>
+
+    <script>
+        async function fetchSearchResults() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('query');
+
+            try {
+                const response = await fetch(`/api/search?query=${query}`);
+                const wallpapers = await response.json();
+                const searchResultsContainer = document.getElementById('search-results');
+
+                wallpapers.forEach(wallpaper => {
+                    const wallpaperDiv = document.createElement('div');
+                    wallpaperDiv.classList.add('grid-item', 'gallery');
+
+                    wallpaperDiv.innerHTML = `
+                        <h2 class="img_info_tags">${wallpaper.caption}</h2>
+                        <p class="img_info_size">${wallpaper.description}</p>
+                        <img src="${wallpaper.contentUrl}" alt="${wallpaper.caption}" class="main_img">
+                        <p class="img_info_tags">Keywords: ${wallpaper.keywords}</p>
+                        <p class="img_info_size">Dimensions: ${wallpaper.width} x ${wallpaper.height} px</p>
+                        <p class="img_info_size">File Size: ${wallpaper.contentSize}</p>
+                    `;
+
+                    wallpaperDiv.addEventListener('click', () => {
+                        window.location.href = `/wallpaper-page?id=${wallpaper.url.split('/').pop()}`;
+                    });
+
+                    searchResultsContainer.appendChild(wallpaperDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching search results:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchSearchResults);
+    </script>
+</body>
+</html>

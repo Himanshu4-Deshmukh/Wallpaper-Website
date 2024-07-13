@@ -1,0 +1,544 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallpaper Details</title>
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/base.css">
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/index.css">
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/snippets/gallery.css">
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/snippets/blocker.css">
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/wallpaper.css">
+
+</head>
+<body>
+    <h1>Wallpaper Details</h1>
+    <div id="wallpaper-details"></div>
+    <h2>Related Wallpapers</h2>
+    <div id="related-wallpapers" class="grid"></div>
+
+    <script>
+        async function fetchWallpaperDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            try {
+                const response = await fetch(`/api/wallpapers/wallpaper/${id}`);
+                const wallpaper = await response.json();
+                const wallpaperDetailsContainer = document.getElementById('wallpaper-details');
+                const relatedWallpapersContainer = document.getElementById('related-wallpapers');
+
+                wallpaperDetailsContainer.innerHTML = `
+                    <img src="${wallpaper.imageUrl}" alt="${wallpaper.description}">
+                    <p>${wallpaper.description}</p>
+                    <p>Keywords: ${wallpaper.keywords}</p>
+                `;
+
+                wallpaper.related.forEach(related => {
+                    const relatedDiv = document.createElement('div');
+                    relatedDiv.classList.add('grid-item', 'gallery');
+
+                    relatedDiv.innerHTML = `
+                        <h2 class="img_info_tags">${related.caption}</h2>
+                        <p class="img_info_size">${related.description}</p>
+                        <img src="${related.contentUrl}" alt="${related.caption}" class="main_img">
+                        <p class="img_info_tags">Keywords: ${related.keywords}</p>
+                        <p class="img_info_size">Dimensions: ${related.width} x ${related.height} px</p>
+                        <p class="img_info_size">File Size: ${related.contentSize}</p>
+                    `;
+
+                    relatedDiv.addEventListener('click', () => {
+                        window.location.href = `/wallpaper-page?id=${related.url.split('/').pop()}`;
+                    });
+
+                    relatedWallpapersContainer.appendChild(relatedDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching wallpaper details:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchWallpaperDetails);
+    </script>
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallpaper Details</title>
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/base.css">
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/index.css">
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/snippets/gallery.css">
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/snippets/blocker.css">
+</head>
+<body>
+    <h1>Wallpaper Details</h1>
+    <div id="wallpaper-details"></div>
+    <h2>Related Wallpapers</h2>
+    <div id="related-wallpapers" class="grid"></div>
+
+    <script>
+        async function fetchWallpaperDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            try {
+                const response = await fetch(`/api/wallpapers/wallpaper/${id}`);
+                const wallpaper = await response.json();
+                const wallpaperDetailsContainer = document.getElementById('wallpaper-details');
+                const relatedWallpapersContainer = document.getElementById('related-wallpapers');
+
+                wallpaperDetailsContainer.innerHTML = `
+                    <a href="${wallpaper.imageUrl}" download>
+                        <img src="${wallpaper.imageUrl}" alt="${wallpaper.description}" id="mainWallpaper">
+                    </a>
+                    <p>${wallpaper.description}</p>
+                    <p>Keywords: ${wallpaper.keywords}</p>
+                `;
+
+                wallpaper.related.forEach(related => {
+                    const relatedDiv = document.createElement('div');
+                    relatedDiv.classList.add('grid-item', 'gallery');
+
+                    relatedDiv.innerHTML = `
+                        <h2 class="img_info_tags">${related.caption}</h2>
+                        <p class="img_info_size">${related.description}</p>
+                        <img src="${related.contentUrl}" alt="${related.caption}" class="main_img">
+                        <p class="img_info_tags">Keywords: ${related.keywords}</p>
+                        <p class="img_info_size">Dimensions: ${related.width} x ${related.height} px</p>
+                        <p class="img_info_size">File Size: ${related.contentSize}</p>
+                    `;
+
+                    relatedDiv.addEventListener('click', () => {
+                        window.location.href = `/wallpaper-page?id=${related.url.split('/').pop()}`;
+                    });
+
+                    relatedWallpapersContainer.appendChild(relatedDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching wallpaper details:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchWallpaperDetails);
+    </script>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallpaper Details</title>
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/base.css">
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/index.css">
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/snippets/gallery.css">
+    <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/snippets/blocker.css">
+</head>
+<body>
+    <h1>Wallpaper Details</h1>
+    <div id="wallpaper-details"></div>
+    <h2>Related Wallpapers</h2>
+    <div id="related-wallpapers" class="grid"></div>
+
+    <script>
+        async function fetchWallpaperDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            try {
+                const response = await fetch(`/api/wallpapers/wallpaper/${id}`);
+                const wallpaper = await response.json();
+                const wallpaperDetailsContainer = document.getElementById('wallpaper-details');
+                const relatedWallpapersContainer = document.getElementById('related-wallpapers');
+
+                wallpaperDetailsContainer.innerHTML = `
+                    <a href="${wallpaper.imageUrl}" download>
+                        <img src="${wallpaper.imageUrl}" alt="${wallpaper.description}" id="mainWallpaper">
+                    </a>
+                    <p>${wallpaper.description}</p>
+                    <p>Keywords: ${wallpaper.keywords}</p>
+                `;
+
+                wallpaper.related.forEach(related => {
+                    const relatedDiv = document.createElement('div');
+                    relatedDiv.classList.add('grid-item', 'gallery');
+
+                    relatedDiv.innerHTML = `
+                        <h2 class="img_info_tags">${related.caption}</h2>
+                        <p class="img_info_size">${related.description}</p>
+                        <img src="${related.contentUrl}" alt="${related.caption}" class="main_img">
+                        <p class="img_info_tags">Keywords: ${related.keywords}</p>
+                        <p class="img_info_size">Dimensions: ${related.width} x ${related.height} px</p>
+                        <p class="img_info_size">File Size: ${related.contentSize}</p>
+                    `;
+
+                    relatedDiv.addEventListener('click', () => {
+                        window.location.href = `/wallpaper-page?id=${related.url.split('/').pop()}`;
+                    });
+
+                    relatedWallpapersContainer.appendChild(relatedDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching wallpaper details:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchWallpaperDetails);
+    </script>
+</body>
+</html> -->
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallpaper Details</title>
+    
+    <style>
+        #fullscreen-btn {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wallpaper Details</h1>
+    <div id="wallpaper-details"></div>
+    <button id="fullscreen-btn">View Full Screen</button>
+    <h2>Related Wallpapers</h2>
+    <div id="related-wallpapers" class="grid"></div>
+
+    <script>
+        async function fetchWallpaperDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            try {
+                const response = await fetch(`/api/wallpapers/wallpaper/${id}`);
+                const wallpaper = await response.json();
+                const wallpaperDetailsContainer = document.getElementById('wallpaper-details');
+                const relatedWallpapersContainer = document.getElementById('related-wallpapers');
+
+                wallpaperDetailsContainer.innerHTML = `
+                    <a href="${wallpaper.imageUrl}" download>
+                        <img src="${wallpaper.imageUrl}" alt="${wallpaper.description}" id="mainWallpaper">
+                    </a>
+                    <p>${wallpaper.description}</p>
+                    <p>Keywords: ${wallpaper.keywords}</p>
+                `;
+
+                wallpaper.related.forEach(related => {
+                    const relatedDiv = document.createElement('div');
+                    relatedDiv.classList.add('grid-item', 'gallery');
+
+                    relatedDiv.innerHTML = `
+                        <h2 class="img_info_tags">${related.caption}</h2>
+                        <p class="img_info_size">${related.description}</p>
+                        <img src="${related.contentUrl}" alt="${related.caption}" class="main_img">
+                        <p class="img_info_tags">Keywords: ${related.keywords}</p>
+                        <p class="img_info_size">Dimensions: ${related.width} x ${related.height} px</p>
+                        <p class="img_info_size">File Size: ${related.contentSize}</p>
+                    `;
+
+                    relatedDiv.addEventListener('click', () => {
+                        window.location.href = `/wallpaper-page?id=${related.url.split('/').pop()}`;
+                    });
+
+                    relatedWallpapersContainer.appendChild(relatedDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching wallpaper details:', error);
+            }
+        }
+
+        function toggleFullScreen() {
+            const img = document.getElementById('mainWallpaper');
+            if (!document.fullscreenElement) {
+                img.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        document.getElementById('fullscreen-btn').addEventListener('click', toggleFullScreen);
+
+        document.addEventListener('DOMContentLoaded', fetchWallpaperDetails);
+    </script>
+</body>
+</html> -->
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallpaper Details</title>
+    <style>
+        body {
+            background-color: #f7fafc;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        #wallpaper-details {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        #fullscreen-btn {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .masonry {
+            column-count: 3;
+            column-gap: 16px;
+        }
+        .masonry-item {
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+            width: 100%;
+        }
+        .masonry-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px ;
+        }
+        .masonry-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>😈Download me 😈</h1>
+        <div id="wallpaper-details"></div>
+        <button id="fullscreen-btn">View Full Screen</button>
+        <h2>Related Wallpapers</h2>
+        <div id="related-wallpapers" class="masonry"></div>
+    </div>
+
+    <script>
+        async function fetchWallpaperDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            try {
+                const response = await fetch(`/api/wallpapers/wallpaper/${id}`);
+                const wallpaper = await response.json();
+                const wallpaperDetailsContainer = document.getElementById('wallpaper-details');
+                const relatedWallpapersContainer = document.getElementById('related-wallpapers');
+
+                wallpaperDetailsContainer.innerHTML = `
+                    <a href="${wallpaper.imageUrl}" download>
+                        <img src="${wallpaper.imageUrl}" alt="${wallpaper.description}" id="mainWallpaper">
+                    </a>
+                    
+                `;
+
+                wallpaper.related.forEach(related => {
+                    const relatedDiv = document.createElement('div');
+                    relatedDiv.classList.add('masonry-item');
+
+                    relatedDiv.innerHTML = `
+                         
+                        <img src="${related.contentUrl}" alt="${related.caption}">
+                         
+                    `;
+
+                    relatedDiv.addEventListener('click', () => {
+                        window.location.href = `/wallpaper-page?id=${related.url.split('/').pop()}`;
+                    });
+
+                    relatedWallpapersContainer.appendChild(relatedDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching wallpaper details:', error);
+            }
+        }
+
+        function toggleFullScreen() {
+            const img = document.getElementById('mainWallpaper');
+            if (!document.fullscreenElement) {
+                img.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        document.getElementById('fullscreen-btn').addEventListener('click', toggleFullScreen);
+
+        document.addEventListener('DOMContentLoaded', fetchWallpaperDetails);
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demon Wallpapers</title>
+    <style>
+        body {
+            background-color: #f7fafc;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        #wallpaper-details {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        #fullscreen-btn {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .masonry {
+            column-count: 3;
+            column-gap: 16px;
+        }
+        .masonry-item {
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+            width: 100%;
+        }
+        .masonry-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px ;
+        }
+        .masonry-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        @media (max-width: 768px) {
+            .masonry {
+                column-count: 2;
+            }
+        }
+        @media (max-width: 480px) {
+            .masonry {
+                column-count: 2;
+            }
+            #fullscreen-btn {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+        @media (max-width: 768px) {
+            #mainWallpaper {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>😈Download me 😈</h1>
+        <div id="wallpaper-details"></div>
+        <button id="fullscreen-btn">View Full Screen</button>
+        <h2>Related Wallpapers</h2>
+        <div id="related-wallpapers" class="masonry"></div>
+    </div>
+
+    <script>
+        async function fetchWallpaperDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            try {
+                const response = await fetch(`/api/wallpapers/wallpaper/${id}`);
+                const wallpaper = await response.json();
+                const wallpaperDetailsContainer = document.getElementById('wallpaper-details');
+                const relatedWallpapersContainer = document.getElementById('related-wallpapers');
+
+                wallpaperDetailsContainer.innerHTML = `
+                    <a href="${wallpaper.imageUrl}" download>
+                        <img src="${wallpaper.imageUrl}" alt="${wallpaper.description}" id="mainWallpaper">
+                    </a>
+                `;
+
+                wallpaper.related.forEach(related => {
+                    const relatedDiv = document.createElement('div');
+                    relatedDiv.classList.add('masonry-item');
+
+                    relatedDiv.innerHTML = `
+                        <img src="${related.contentUrl}" alt="${related.caption}">
+                    `;
+
+                    relatedDiv.addEventListener('click', () => {
+                        window.location.href = `/wallpaper-page?id=${related.url.split('/').pop()}`;
+                    });
+
+                    relatedWallpapersContainer.appendChild(relatedDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching wallpaper details:', error);
+            }
+        }
+
+        function toggleFullScreen() {
+            const img = document.getElementById('mainWallpaper');
+            if (!document.fullscreenElement) {
+                img.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        document.getElementById('fullscreen-btn').addEventListener('click', toggleFullScreen);
+
+        document.addEventListener('DOMContentLoaded', fetchWallpaperDetails);
+    </script>
+</body>
+</html>

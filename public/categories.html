@@ -1,0 +1,214 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infinite Scrolling Categories</title>
+  <style>
+   
+  </style>
+</head>
+<body>
+  <div class="cats row" id="categoriesContainer">
+ 
+  </div>
+  <div id="loading" style="text-align:center; display:none;">Loading...</div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let page = 1; // Track current page number
+      let loading = false;
+
+      const loadMoreCategories = () => {
+        if (loading) return;
+        loading = true;
+        document.getElementById('loading').style.display = 'block';
+
+        fetch(`http://localhost:3000/categories?page=${page}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.length > 0) {
+              const container = document.getElementById('categoriesContainer');
+              data.forEach(category => {
+                const categoryHTML = `
+                  <div class="col">
+                    <div class="first">
+                      <a href="${category.link}">
+                        <div class="cl">
+                          <img class="main lazyload" src="${category.image}" data-src="${category.image}" height="196px" width="305px" alt="${category.alt}" title="${category.title}">
+                        </div>
+                        <h3>${category.name}</h3>
+                      </a>
+                    </div>
+                  </div>`;
+                container.insertAdjacentHTML('beforeend', categoryHTML);
+              });
+              page += 1;
+            }
+            loading = false;
+            document.getElementById('loading').style.display = 'none';
+          })
+          .catch(error => {
+            console.error('Error loading more categories:', error);
+            loading = false;
+            document.getElementById('loading').style.display = 'none';
+          });
+      };
+
+      window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+          loadMoreCategories();
+        }
+      });
+
+    
+      loadMoreCategories();
+    });
+  </script>
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/base.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/snippets/blocker.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infinite Scrolling Categories</title>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async=""></script>
+</head>
+<body>
+  <div class="cats row" id="categoriesContainer"> 
+  </div>
+  <div id="loading">Loading...</div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let page = 1;  
+      let loading = false;
+
+      const loadMoreCategories = () => {
+        if (loading) return;
+        loading = true;
+        document.getElementById('loading').style.display = 'block';
+
+        fetch(`http://localhost:3000/api/categories?page=${page}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.length > 0) {
+              const container = document.getElementById('categoriesContainer');
+              data.forEach(category => {
+                const categoryHTML = `
+                  <div class="col">
+                    <div class="first">
+                      <a href="${category.link}">
+                        <div class="cl">
+                          <img class="main lazyload" src="${category.image}" data-src="${category.image}" height="196px" width="305px" alt="${category.alt}" title="${category.title}">
+                        </div>
+                        <h3>${category.name}</h3>
+                      </a>
+                    </div>
+                  </div>`;
+                container.insertAdjacentHTML('beforeend', categoryHTML);
+              });
+              page += 1;
+            }
+            loading = false;
+            document.getElementById('loading').style.display = 'none';
+          })
+          .catch(error => {
+            console.error('Error loading more categories:', error);
+            loading = false;
+            document.getElementById('loading').style.display = 'none';
+          });
+      };
+
+      window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+          loadMoreCategories();
+        }
+      });
+
+       
+      loadMoreCategories();
+    });
+  </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/base.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://oceanofwallpapers.com/static/css/snippets/blocker.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infinite Scrolling Categories</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async=""></script>
+</head>
+<body>
+  <div class="cats row" id="categoriesContainer">
+    <!-- Initial categories will be loaded here -->
+  </div>
+  <div id="loading">Loading...</div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let page = 1; // Track current page number
+      let loading = false;
+
+      const loadMoreCategories = () => {
+        if (loading) return;
+        loading = true;
+        document.getElementById('loading').style.display = 'block';
+
+        fetch(`http://localhost:3000/api/categories/categories?page=${page}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.length > 0) {
+              const container = document.getElementById('categoriesContainer');
+              data.forEach(category => {
+                const categoryHTML = `
+                  <div class="col">
+                    <div class="first">
+                      <a href="${category.link}">
+                        <div class="cl">
+                          <img class="main lazyload" src="${category.image}" data-src="${category.image}" height="196px" width="305px" alt="${category.alt}" title="${category.title}">
+                        </div>
+                        <h3>${category.name}</h3>
+                      </a>
+                    </div>
+                  </div>`;
+                container.insertAdjacentHTML('beforeend', categoryHTML);
+              });
+              page += 1;
+            }
+            loading = false;
+            document.getElementById('loading').style.display = 'none';
+          })
+          .catch(error => {
+            console.error('Error loading more categories:', error);
+            loading = false;
+            document.getElementById('loading').style.display = 'none';
+          });
+      };
+
+      window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+          loadMoreCategories();
+        }
+      });
+
+      // Initial load
+      loadMoreCategories();
+    });
+  </script>
+</body>
+</html>
