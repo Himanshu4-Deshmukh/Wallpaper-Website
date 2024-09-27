@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Viewer</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        img {
+            max-width: 90%;
+            max-height: 70%;
+            border: 2px solid #ccc;
+            margin-bottom: 20px; /* Add some space between the image and the button */
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #007bff; /* Primary color */
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+
+  
+                /* Navbar styling */
+                .navbar {
+            background-color: #007bff;
+            /* padding: 10px; */
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            color: white;
+            z-index: 999;
+        }
+
+        /* Footer styling */
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            z-index: 999;
+        }
+
+        .footer svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h3>😈 Demon Wallpapers 😈</h3>
+      </div>
+
+
+    <img id="image" src="" alt="Image Viewer">
+    <a id="downloadLink" class="btn" download>
+        Download Now
+    </a>
+
+        <!-- Footer -->
+        <div class="footer">
+            <a href="index.html">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+            </a>
+        </div>
+
+    <script>
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const imageUrl = getUrlParameter('img');
+            const imgElement = document.getElementById('image');
+            const downloadLink = document.getElementById('downloadLink');
+
+            imgElement.src = imageUrl || 'default-image.jpg'; // Fallback image if none
+            
+            // Set the download link to the image URL and provide a filename
+            downloadLink.href = imageUrl;
+            downloadLink.setAttribute('download', imageUrl.split('/').pop()); // Use the last part of the URL as the filename
+        });
+    </script>
+</body>
+</html>

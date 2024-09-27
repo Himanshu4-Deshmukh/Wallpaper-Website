@@ -1,0 +1,114 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demon Collection</title>
+    <style>
+        body {
+            background-color: #f7fafc;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        .masonry {
+            column-count: 3;
+            column-gap: 16px;
+        }
+        .masonry-item {
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+            width: 100%;
+        }
+        .masonry-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px  ;
+        }
+        .masonry-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .masonry {
+                column-count: 2;
+            }
+        }
+        @media (max-width: 480px) {
+            .masonry {
+                column-count: 2;
+            }
+          
+        }
+        h1, h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-3xl font-bold text-center mb-8">😈Demon Wallpapers😈 </h1>
+        <div id="wallpapers" class="masonry"></div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        let isFetching = false;
+
+        async function fetchWallpapers(page) {
+            if (isFetching) return;
+            isFetching = true;
+
+            try {
+                const response = await fetch(`/api/wallpapers/scrape?page=${page}`);
+                const wallpapers = await response.json();
+                const wallpapersContainer = document.getElementById('wallpapers');
+
+                wallpapers.forEach(wallpaper => {
+                    const wallpaperDiv = document.createElement('div');
+                    wallpaperDiv.classList.add('masonry-item');
+
+                    wallpaperDiv.innerHTML = `
+                        <img src="${wallpaper.contentUrl}" alt="${wallpaper.caption}">
+                    `;
+
+                    wallpaperDiv.addEventListener('click', () => {
+                        window.location.href = `/wallpaper-page?id=${wallpaper.url.split('/').pop()}`;
+                    });
+
+                    wallpapersContainer.appendChild(wallpaperDiv);
+                });
+
+                isFetching = false;
+            } catch (error) {
+                console.error(error);
+                isFetching = false;
+            }
+        }
+
+        function handleScroll() {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !isFetching) {
+                currentPage++;
+                fetchWallpapers(currentPage);
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll);
+
+        // Initial fetch
+        fetchWallpapers(currentPage);
+    </script>
+</body>
+</html>
