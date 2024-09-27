@@ -246,15 +246,56 @@
 //     console.log(`Server running at http://localhost:${port}`);
 // });
 
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
-const wallpapersRoute = require('./routes/wallpapers');
-const searchRoute = require('./routes/search');
-const categoryRoutes = require('./routes/categories');
+// const express = require('express');
+// const path = require('path');
+// const cors = require('cors');
+// const wallpapersRoute = require('./routes/wallpapers');
+// const searchRoute = require('./routes/search');
+// const categoryRoutes = require('./routes/categories');
 
  
 
+
+// const app = express();
+// const port = 3000;
+
+// app.use(cors());
+// app.use(express.static('public'));
+
+// app.use('/api/wallpapers', wallpapersRoute);
+// app.use('/api', searchRoute);
+// app.use('/api/categories', categoryRoutes);
+
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public/index.html'));
+// });
+
+// app.get('/search', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public/search.html'));
+// });
+ 
+// app.get('/wallpaper-page', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public/wallpaper.html'));
+// });
+
+
+
+
+ 
+// // Serve category.html for fetching categories
+// app.get('/categories-page', (req, res) => {
+//     res.sendFile(path.join(__dirname, '/public/categories.html'));
+// });
+
+// app.listen(port, () => {
+//     console.log(`Server running at http://localhost:${port}`);
+// });
+
+
+const express = require('express');
+const axios = require('axios');
+const cheerio = require('cheerio');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
@@ -262,30 +303,68 @@ const port = 3000;
 app.use(cors());
 app.use(express.static('public'));
 
-app.use('/api/wallpapers', wallpapersRoute);
-app.use('/api', searchRoute);
-app.use('/api/categories', categoryRoutes);
+app.get('/scrape', async (req, res) => {
+    try {
+        const { data } = await axios.get('https://wallpapers.com/');
+        const $ = cheerio.load(data);
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+        const categories = [];
+
+        $('div.col').each((index, element) => {
+            const category = {};
+
+            const titleElement = $(element).find('div.category__title a');
+            category.title = titleElement.attr('title');
+            category.url = titleElement.attr('href');
+
+            category.subcategories = [];
+            $(element).find('div.category__list a').each((subIndex, subElement) => {
+                const subcategory = {};
+                subcategory.title = $(subElement).attr('title');
+                subcategory.url = $(subElement).attr('href');
+                category.subcategories.push(subcategory);
+            });
+
+            categories.push(category);
+        });
+
+        res.json(categories);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error scraping data');
+    }
 });
 
-app.get('/search', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/search.html'));
+// Updated route to fetch content for a specific category/subcategory
+app.get('/fetch-content', async (req, res) => {
+    const { url } = req.query;
+    
+    try {
+        const { data } = await axios.get(url);
+        const $ = cheerio.load(data);
+
+        // Extract the necessary data from the HTML
+        const items = [];
+        $('li.content-card.horizontal').each((index, element) => {
+            const item = {};
+            item.id = $(element).attr('id');
+            item.title = $(element).find('figcaption span').text();
+            // item.image = $(element).find('img.promote').attr('src');
+            item.image = 'https://wallpapers.com' + $(element).find('img.promote').attr('data-src');
+
+            item.description = $(element).find('figure.detail-data').attr('data-desc');
+            item.author = $(element).find('figure.detail-data').attr('data-author');
+            item.url = $(element).find('a').attr('href');
+            items.push(item);
+        });
+
+        res.json(items);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error fetching content');
+    }
 });
- 
-app.get('/wallpaper-page', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/wallpaper.html'));
-});
 
-
-
-
- 
-// Serve category.html for fetching categories
-app.get('/categories-page', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/categories.html'));
-});
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
